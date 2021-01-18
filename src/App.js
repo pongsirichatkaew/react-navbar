@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
-
+import LandingPage from "./pages/LandingPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import { Switch, Route } from "react-router-dom";
+import { GlobalStyles } from "./styles/GlobalStyles";
+import useWindowDimensions from "./hooks/useWindowDimensions";
+import HambergerMenu from "./components/HamburgerMenu/HamburgerMenu";
+import Navbar from "./components/Navbar/Navbar";
 function App() {
+  const { width } = useWindowDimensions();
+  console.log(width);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyles />
+      <Switch>
+        <Route path="/" exact>
+          {width > 576 ? <Navbar /> : <HambergerMenu />}
+          <LandingPage />
+        </Route>
+        <Route path="*">
+          <NotFoundPage />
+        </Route>
+      </Switch>
+    </>
   );
 }
 
